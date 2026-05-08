@@ -200,6 +200,20 @@ void ignition_can_hook(CANPacket_t *msg) {
       ignition_can = (msg->data[0] >> 5) == 0x6U;
       ignition_can_cnt = 0U;
     }
+
+    // Mazda GEN2 exception
+    if ((msg->addr == 0x274U) && (len == 8)) {
+      ignition_can = (msg->data[5] & 0x4U) != 0U;
+      ignition_can_cnt = 0U;
+    }
+  }
+
+  if (msg->bus == 1U) {
+    // Mazda GEN2 exception
+    if ((msg->addr == 0x274U) && (len == 8)) {
+      ignition_can = (msg->data[5] & 0x4U) != 0U;
+      ignition_can_cnt = 0U;
+    }
   }
 
   // TODO: this is too loose, Teslas have 0x222
