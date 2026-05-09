@@ -209,6 +209,7 @@ void ignition_can_hook(CANPacket_t *msg) {
   }
 
   if (msg->bus == 1U) {
+    int len = GET_LEN(msg);
     // Mazda GEN2 exception
     if ((msg->addr == 0x274U) && (len == 8)) {
       ignition_can = (msg->data[5] & 0x4U) != 0U;
